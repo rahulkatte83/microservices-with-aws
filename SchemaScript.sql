@@ -1,4 +1,4 @@
-USE desichef;
+USE marketplace;
 
 CREATE TABLE IF NOT EXISTS desichef.users (
   id INT NOT NULL AUTO_INCREMENT,  
