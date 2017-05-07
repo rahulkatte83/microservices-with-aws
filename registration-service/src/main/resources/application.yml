@@ -1,0 +1,71 @@
+# For aws environment deployment
+spring:
+    profiles: cloud
+    application:
+        name: REGISTRATIONSERVICE
+    database-name: marketplace
+    db-instance-identifier: awsrdsdb
+    rdsPassword: awsrdsdb
+    accessKey: <your aws access key>
+    secretKey: <your aws secret key>
+
+
+server:
+  port: 9080
+
+eureka:
+    us-west-2:
+        availabilityZones: us-west-2a, us-west-2b
+    datacenter: cloud
+    instance:
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+            us-west-2a: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+            us-west-2b: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+            
+            
+---
+# For local environment deployment   
+
+spring:
+    profiles: local
+    application:
+        name: REGISTRATIONSERVICE
+    database-name: desichef
+    db-instance-identifier: awsrdsdb
+    rdsPassword: awsrdsdb
+    accessKey: <your aws access key>
+    secretKey: <your aws secret key>
+    jpa:
+        show-sql: false
+        hibernate:
+            ddl-auto: update
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+
+# Allows Hibernate to generate SQL optimized for a particular DBMS
+        properties:
+            hibernate:
+                hbm2ddl: update
+                dialect: org.hibernate.dialect.MySQL5Dialect
+
+cloud:
+    aws:
+        region:
+            static: us-west-2
+        credentials:
+            accessKey: <your aws access key>
+            secretKey: <your aws secret key>
+
+server:
+  port: 9080
+
+eureka:
+    instance:
+        preferIpAddress: true
+    client:
+        serviceUrl:
+            defaultZone: http://eureka:8761/eureka/
+
+            

@@ -1,0 +1,41 @@
+version: '2'
+services:
+    user:
+        image: rahulkatte/user-service:0.0.1-SNAPSHOT
+        container_name: user
+        ports:
+        - "8080:8080"
+        environment:
+            - "SPRING_PROFILES_ACTIVE=local"
+    registration:
+        image: rahulkatte/registration-service:0.0.1-SNAPSHOT
+        container_name: registration
+        ports:
+        - "9080:9080"
+        environment:
+            - "SPRING_PROFILES_ACTIVE=local"
+
+    order:
+        image: rahulkatte/order-service:0.0.1-SNAPSHOT
+        container_name: order
+        ports:
+        - "9081:8080"
+        environment:
+            - "SPRING_PROFILES_ACTIVE=local"
+           
+    eureka:
+        image: rahulkatte/eureka-service:0.0.1-SNAPSHOT
+        container_name: eureka
+        ports:
+        - "8761:8761"
+        environment:
+            - "SPRING_PROFILES_ACTIVE=local"            
+            
+    zuul:
+        image: rahulkatte/zuul-server:0.0.1-SNAPSHOT
+        container_name: zuul
+        mem_limit: 450m
+        ports:
+        - "80:8765"
+        environment:
+            - "SPRING_PROFILES_ACTIVE=local"  

@@ -1,0 +1,43 @@
+spring:
+  profiles: cloud
+server:
+    port: 8761
+
+eureka:
+    region: us-west-2
+    shouldUseDns: false
+    datacenter: cloud
+    us-west-2: 
+        availabilityZones: us-west-2a,us-west-2b
+    client:
+        registerWithEureka: false
+        fetchRegistry: false
+        serviceUrl:
+            defaultZone: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+            us-west-2a: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+            us-west-2b: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+    server:
+        waitTimeInMsWhenSyncEmpty: 0
+        enableSelfPreservation: false
+
+        
+        
+---
+# For deployment in Docker containers        
+spring:
+  profiles: local
+
+server:
+    port: 8761
+
+eureka:
+    instance:
+          hostname: eureka
+    client:
+        registerWithEureka: false
+        fetchRegistry: false
+        serviceUrl:
+            defaultZone: http://eureka:8761/eureka/
+    server:
+        waitTimeInMsWhenSyncEmpty: 0
+        enableSelfPreservation: false

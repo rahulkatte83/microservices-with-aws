@@ -1,0 +1,134 @@
+info:
+    component: Zuul Server
+
+spring:
+  profiles: cloud
+  application:
+     name: zuul-server
+
+hystrix:
+  threadpool:
+    default:
+      # Maximum number of concurrent requests when using thread pools (Default: 10)
+      coreSize: 100
+      # Maximum LinkedBlockingQueue size - -1 for using SynchronousQueue (Default: -1)
+      maxQueueSize: -1
+      # Queue size rejection threshold (Default: 5)
+      queueSizeRejectionThreshold: 5
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 30000
+        requestVolumeThreshold: 20
+      execution:
+        isolation:
+#          strategy: SEMAPHORE, no thread pool but timeout handling stops to work
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 20000
+            
+zuul:
+    ignoredServices: "*"
+    routes:
+        userroute:
+            path: /v1/users/**
+            serviceId: USERSERVICE
+            stripPrefix: false
+        registrationroute:
+            path: /v1/registration/**
+            serviceId: REGISTRATIONSERVICE
+            stripPrefix: false     
+        orderroute:
+            path: /v1/orders/**
+            serviceId: ORDERSERVICE
+            stripPrefix: false
+                
+server:
+  port: 8765
+
+
+eureka:
+    us-west-2:
+        availabilityZones: us-west-2a, us-west-2b
+    client:
+        fetchRegistry: true
+        serviceUrl:
+            defaultZone: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+            us-west-2a: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+            us-west-2b: http://<public-DNS-of-eureka-ec2-instance>/eureka/
+
+logging:
+    level:
+      ROOT: INFO
+      org.springframework.web: INFO
+
+app:
+  ConnectTimeout: 10000
+  ReadTimeout: 30000
+  
+---
+# For local environment demo   
+  
+info:
+    component: Zuul Server
+
+spring:
+  profiles: local
+  application:
+     name: zuul-server
+
+hystrix:
+  threadpool:
+    default:
+      # Maximum number of concurrent requests when using thread pools (Default: 10)
+      coreSize: 100
+      # Maximum LinkedBlockingQueue size - -1 for using SynchronousQueue (Default: -1)
+      maxQueueSize: -1
+      # Queue size rejection threshold (Default: 5)
+      queueSizeRejectionThreshold: 5
+  command:
+    default:
+      circuitBreaker:
+        sleepWindowInMilliseconds: 30000
+        requestVolumeThreshold: 2
+      execution:
+        isolation:
+#          strategy: SEMAPHORE, no thread pool but timeout handling stops to work
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 6000
+            
+zuul:
+    ignoredServices: "*"
+    routes:
+        userroute:
+            path: /v1/users/**
+            serviceId: USERSERVICE
+            stripPrefix: false
+        registrationroute:
+            path: /v1/registration/**
+            serviceId: REGISTRATIONSERVICE
+            stripPrefix: false     
+        orderroute:
+            path: /v1/orders/**
+            serviceId: ORDERSERVICE
+            stripPrefix: false    
+                
+server:
+  port: 8765
+
+
+eureka:
+    client:
+        fetchRegistry: true
+        serviceUrl:
+            defaultZone: http://eureka:8761/eureka/
+
+logging:
+    level:
+      ROOT: INFO
+      org.springframework.web: INFO
+
+app:
+  ConnectTimeout: 10000
+  ReadTimeout: 30000 

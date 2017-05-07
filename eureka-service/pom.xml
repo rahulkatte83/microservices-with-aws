@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.marketplace</groupId>
+		<artifactId>marketplace</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.desichef.erurekaservice</groupId>
+	<artifactId>eureka-service</artifactId>
+	<name>eureka-service</name>
+	<packaging>jar</packaging>
+	<properties>
+		<start-class>com.marketplace.eureka.config.App</start-class>
+		<docker.registry.name></docker.registry.name>
+		<docker.repository.name>${docker.registry.name}rahulkatte/${project.artifactId}</docker.repository.name>
+		<docker.host.address>192.168.1.3</docker.host.address>
+		<docker.port>8761</docker.port>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka-server</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jolokia</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.13.7</version>
+				<configuration>
+					<sourceDirectory>/src/main/docker</sourceDirectory>
+					<images>
+						<image>
+							<name>${docker.repository.name}:${project.version}</name>
+							<alias>${project.artifactId}</alias>
+							<build>
+								<from>java:8-jre</from>
+								<maintainer>rahulk</maintainer>
+								<assembly>
+									<descriptor>docker-assembly.xml</descriptor>
+								</assembly>
+								<ports>
+									<port>${docker.port}</port>
+								</ports>
+								<cmd>
+									<shell>java -jar \
+										/maven/${project.build.finalName}.jar server \
+										/maven/docker-config.yml</shell>
+								</cmd>
+							</build>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

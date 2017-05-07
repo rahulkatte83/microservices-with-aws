@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aws-context="http://www.springframework.org/schema/cloud/aws/context"
+       xmlns:jdbc="http://www.springframework.org/schema/cloud/aws/jdbc"
+       xmlns:aws-messaging="http://www.springframework.org/schema/cloud/aws/messaging"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+                           http://www.springframework.org/schema/cloud/aws/context
+                           http://www.springframework.org/schema/cloud/aws/context/spring-cloud-aws-context-1.0.xsd
+                           http://www.springframework.org/schema/cloud/aws/jdbc             
+                           http://www.springframework.org/schema/cloud/aws/jdbc/spring-cloud-aws-jdbc-1.0.xsd
+                           http://www.springframework.org/schema/cloud/aws/messaging
+	   					   http://www.springframework.org/schema/cloud/aws/messaging/spring-cloud-aws-messaging">
+
+  <aws-context:context-credentials>
+		<aws-context:simple-credentials access-key="${spring.accessKey}" secret-key="${spring.secretKey}"/>
+  </aws-context:context-credentials>
+
+<!-- Configuration for AWS SQS message listener -->  
+<!--   <aws-messaging:queue-messaging-template id="queueMessagingTemplate" />
+  <aws-messaging:annotation-driven-queue-listener/>   
+ -->
+  <!-- <aws-context:context-resource-loader/> -->
+
+</beans>
