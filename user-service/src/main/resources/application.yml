@@ -30,7 +30,7 @@ spring:
     profiles: local
     application:
         name: USERSERVICE  
-    database-name: desichef
+    database-name: marketplace
     db-instance-identifier: awsrdsdb
     rdsPassword: awsrdsdb
     accessKey: <your aws access key>
