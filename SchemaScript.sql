@@ -1,6 +1,6 @@
 USE marketplace;
 
-CREATE TABLE IF NOT EXISTS desichef.users (
+CREATE TABLE IF NOT EXISTS marketplace.users (
   id INT NOT NULL AUTO_INCREMENT,  
   address VARCHAR(40),
   city VARCHAR(40),
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS desichef.users (
   phone_no VARCHAR(12),
   PRIMARY KEY (id));
   
-CREATE TABLE IF NOT EXISTS desichef.registration (
+CREATE TABLE IF NOT EXISTS marketplace.registration (
   id INT NOT NULL AUTO_INCREMENT,
   item VARCHAR(30),
   user_id INT,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS desichef.registration (
     FOREIGN KEY (provider_id)
     REFERENCES desichef.users (id));    
     
-CREATE TABLE IF NOT EXISTS desichef.itemorders (
+CREATE TABLE IF NOT EXISTS marketplace.itemorders (
   id INT NOT NULL AUTO_INCREMENT,
   customer_id INT,
   item_id INT,
