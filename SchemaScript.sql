@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS marketplace.registration (
   PRIMARY KEY (id),
   CONSTRAINT FK_PROVIDER
     FOREIGN KEY (provider_id)
-    REFERENCES desichef.users (id));    
+    REFERENCES marketplace.users (id));    
     
 CREATE TABLE IF NOT EXISTS marketplace.itemorders (
   id INT NOT NULL AUTO_INCREMENT,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS marketplace.itemorders (
   PRIMARY KEY (id),
   CONSTRAINT FK_PROVIDER_ITEM_ORDER
     FOREIGN KEY (item_id)
-    REFERENCES desichef.registration (id),
+    REFERENCES marketplace.registration (id),
   CONSTRAINT FK_USER_ITEM
   	FOREIGN KEY (customer_id)
-  	REFERENCES desichef.users (id));
+  	REFERENCES marketplace.users (id));
